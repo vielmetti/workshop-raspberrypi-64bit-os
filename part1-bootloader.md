@@ -105,7 +105,7 @@ Most of the times it is easier and more reliable to use a CI (continous integrat
 
 I just created the necessary Travis configuration file `.travis.yml` with some special settings.
 ```
-cat .travis.yml
+$ cat .travis.yml
 sudo: required
 services:
   - docker
