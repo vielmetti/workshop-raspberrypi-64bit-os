@@ -67,6 +67,7 @@ Now it's time to build our first component, the "rpi-bootloader" which contains 
 
 I've already prepared a GitHub repo to create a tarball https://github.com/dieterreuter/rpi-bootloader.
 
+
 ### How the build process works
 
 The build process uses Docker Compose to build a Docker Image first with a complete build environment based upon Debian/Jessie. So you can see, this build always run in a well defined environment. It's running in an isolated Linux with Debian/Jessie inside of a Docker container. In this case we don't have to install anything (except Docker itself or on macOS Docker-for-Mac) on our host machine.
@@ -96,6 +97,31 @@ builds/
 
 1 directory, 2 files
 ```
+
+
+### Create a Travis CI build job
+
+Most of the times it is easier and more reliable to use a CI (continous integration) system to run the build process on a cloud server, so I'm going to use [Travis CI](https://travis-ci.org).
+
+I just created the necessary Travis configuration file `.travis.yml` with some special settings.
+```
+cat .travis.yml
+sudo: required
+services:
+  - docker
+language: bash
+script:
+  - ./travis-build.sh
+after_success:
+  - ls -al builds/$BUILD_NR/*
+branches:
+  only:
+    - master
+  except:
+    - /^v\d.*$/
+```
+
+With the help of an extra Travis build script `travis-build.sh` I'm now able to upload the build artefacts of every successful build as a new GitHub release at https://github.com/DieterReuter/rpi-bootloader/releases. This makes it very easy to consume these build artefacts later in another build process and I do have all the complete and detailed build logs available for future reference.
 
 
 ## Recap
