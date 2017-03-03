@@ -302,7 +302,7 @@ For easier usage I created a script "build.sh" with these commands, so we can ju
 $ ./build.sh
 ```
 
-The build results can be found in a sub-folder `./builds/`, for each new build the script `build-kernel.sh` is creating a new build folder with an individual version based upon the date+time of the current build. So we can run subsequent builds and keep all the old build artefacts.
+The build results can be found in a sub-folder `./builds/`, for each new build the script `build-kernel.sh` is creating a new build folder with an individual version based upon the date+time of the current build. So we can run subsequent builds and keep all the old build artifacts.
 ```
 $ tree builds
 builds
