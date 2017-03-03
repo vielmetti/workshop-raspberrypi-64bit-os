@@ -12,7 +12,7 @@ In the previous parts of our workshop to build a 64bit Docker OS for the Raspber
 
 Here is the last repo to create the complete SD Card Image https://github.com/DieterReuter/image-builder-rpi64.
 
-You can download and flash the lastet of the SD Card Image from GitHub releases https://github.com/DieterReuter/image-builder-rpi64/releases/latest.
+You can download and flash the latest release of the SD Card Image from GitHub releases https://github.com/DieterReuter/image-builder-rpi64/releases/latest.
 
 * SD Image = hypriotos-rpi64-v20170303-185520.img.zip
 * Nodename = black-pearl
