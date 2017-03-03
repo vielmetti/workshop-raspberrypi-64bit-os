@@ -29,7 +29,7 @@ As we learned about the boot process, we do have only a few requirements to succ
 
 * **FAT32 filesystem** -
 will be mounted later as "/boot" in Linux
-* **File "bootcode.bin"** - Second Stage bootloader
+* **File "bootcode.bin"** - Second Stage Bootloader
 * **File "start.elf"** - GPU Firmware
 * **File "fixup.dat"** - (optional) used to configure the SDRAM partition between GPU and CPU
 
@@ -84,6 +84,17 @@ docker-compose run builder
 For easier usage I created a script "build.sh" with these two commands, so we can just invoke a new build with a single command only.
 ```
 $ ./build.sh
+```
+
+The build results can be found in a sub-folder `./builds/`, for each new build the script `build-tarball.sh` is creating a new build folder with an individual version based upon the date+time of the current build. So we can run subsequent builds and keep all the old build artefacts.
+```
+$ tree builds/
+builds/
+└── 20170303-121340
+    ├── rpi-bootloader.tar.gz
+    └── rpi-bootloader.tar.gz.sha256
+
+1 directory, 2 files
 ```
 
 
