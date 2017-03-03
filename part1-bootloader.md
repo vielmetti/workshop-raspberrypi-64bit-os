@@ -146,7 +146,7 @@ $ tar vtf builds/20170303-121340/rpi-bootloader.tar.gz
 -rw-r--r--  0 root   root  3929604 Mar  3 13:14 boot/start_x.elf
 ```
 
-To create a bootable SD card we now have to format a SD card with FAT32 and have to copy all the files from the "/boot" folder into the root directory of the SD card. But as we don't have any meaningful user code embedded yet, like "kernel8.img", we won't see anything on an attached HDMI monitor nor on the serial UART console. This will be covered in detail in [Part 2 - Kernel](part2-kernel.md).
+To create a bootable SD card we now have to format a SD card with FAT32 and have to copy all the files from the "/boot" folder into the root directory of the SD card. But as we don't have any meaningful user code embedded yet, like "kernel8.img", we won't see anything on an attached HDMI monitor nor on the serial UART console. This will be covered in detail in [Part 2 - Kernel](/part2-kernel.md).
 
 --
 
