@@ -59,11 +59,12 @@ lrwxrwxrwx  0 root   root        0 Sep 27  2014 ./sbin/depmod -> /bin/kmod
 This part of the workshop was really easy because we already have a ready-to-use tarball with the latest version of a pre-configured Debian/Jessie-based HypriotOS for our 64bit Raspberry Pi 3.
 
 Lets sum up what components we do have now:
+
 1. Bootloader - specific for the Raspberry Pi
 2. Kernel - a Linux kernel in 64bit with the current LTS version 4.9.13 compiled and configured for the Raspberry Pi 3
 3. Root Filesystem - from HypriotOS based on Debian/Jessie for AARCH64
 
-So, these are finally all the components we need to build our operating system. This will be covered in [Part 4 - SD Card Image](part4-sd-card-image.md) where we'll create a bootable SD card and assemble all of the components we've built so far.
+So, these are finally all the components we need to build our complete operating system. The final construction will be covered in [Part 4 - SD Card Image](part4-sd-card-image.md) where we'll create a bootable SD card and assemble all of the components we've built so far.
 
 --
 
