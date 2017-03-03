@@ -377,9 +377,9 @@ With the help of an extra Travis build script `travis-build.sh` I'm now able to 
 
 ## Recap
 
-First we discussed how the Linux kernel will be used in the boot process and which necessary files we need to install on the "/boot" section of the FAT32 partiton of the SD card. Then we were able to boot a 64bit Linux kernel successfully on a Raspberry Pi 3 and seen the kernel boot logs appear on the serial UART console.
+First we discussed how the Linux kernel will be used in the boot process and which necessary files we need to install on the "/boot" section of the FAT32 partiton on the SD card. Then we were able to boot a 64bit Linux kernel successfully on a Raspberry Pi 3 and seen the kernel boot logs appear on the serial UART console.
 
-With the help of a newly created GitHub repo we're no able to compile and package all Linux files in tarballs, so we could copy them over onto a SD card.
+With the help of a newly created GitHub repo we're now able to compile and package all necessary Linux kernel files in tarballs, so we could copy them over onto a SD card.
 
 From the boot attempt we know that the Linux kernel ends up in a "kernel panic", because we didn't provide a valid root filesystem on our SD card. So for the next part we'll covering how to create and use such a root filesystem
 in [Part 3 - Root filesystem](part3-root-filesystem.md).
