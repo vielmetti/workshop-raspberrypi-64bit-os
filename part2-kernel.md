@@ -280,8 +280,109 @@ So, this was just for demonstrating the boot process until the Linux kernel will
 
 But as you already guessed we have to build this 64bit Linux kernel first. And this will take some time to be explained and to run the kernel build itself.
 
-TBD, coming soon...
+Luckily the Raspberry Pi Foundation provides a GitHub repo https://github.com/raspberrypi/linux with all the Linux kernel sources, and there is also a branch "rpi-4.9.y" which supports building a 64bit kernel. OK, this branch doesn't have a proper kernel configuration which is already optimized for Docker containers - but this part was just easy for me to fix.
 
+So I've already prepared a GitHub repo https://github.com/dieterreuter/rpi64-kernel to create a true 64bit Linux kernel for the Raspberry Pi 3. And of course with a Docker-optimized kernel configuration, where I have enable absolutely all necessary and important kernel modules and settings which helps to run Linux containers in an optimal way.
+
+The build process itself uses Docker Compose to build a Docker Image first with a complete build environment based upon Debian/Jessie. So you can see, this build always run in a well defined environment. It's running in an isolated Linux with Debian/Jessie inside of a Docker container. In this case we don't have to install anything (except Docker itself or on macOS Docker-for-Mac) on our host machine.
+
+As you can see, I'm using the command `docker-compose build` to build the Docker Image and later on I'm issuing a single build run with the command `docker-compose run builder`. And as a build parameter I can define a specific kernel default configuration file with `DEFCONFIG=docker_rpi3_defconfig`. That's all.
+```
+$ cat build.sh
+#!/bin/bash
+set -e
+
+export DEFCONFIG=docker_rpi3_defconfig
+docker-compose build
+docker-compose run builder
+```
+
+For easier usage I created a script "build.sh" with these commands, so we can just invoke a new build with a single command only.
+```
+$ ./build.sh
+```
+
+The build results can be found in a sub-folder `./builds/`, for each new build the script `build-kernel.sh` is creating a new build folder with an individual version based upon the date+time of the current build. So we can run subsequent builds and keep all the old build artefacts.
+```
+$ tree builds
+builds
+└── 20170303-152804
+    ├── 4.9.13-bee42-v8.config
+    ├── 4.9.13-bee42-v8.tar.gz
+    ├── 4.9.13-bee42-v8.tar.gz.sha256
+    ├── bootfiles.tar.gz
+    └── bootfiles.tar.gz.sha256
+
+1 directory, 5 files
+```
+```
+$ ls -al ./builds/20170303-152804/
+-rw-r--r--  1 dieter  staff    140641 Mar  3 16:28 4.9.13-bee42-v8.config
+-rw-r--r--  1 dieter  staff  21863866 Mar  3 16:40 4.9.13-bee42-v8.tar.gz
+-rw-r--r--  1 dieter  staff        89 Mar  3 16:40 4.9.13-bee42-v8.tar.gz.sha256
+-rw-r--r--  1 dieter  staff   5092332 Mar  3 16:40 bootfiles.tar.gz
+-rw-r--r--  1 dieter  staff        83 Mar  3 16:40 bootfiles.tar.gz.sha256
+```
+
+From the build script `build-kernel.sh` we'll get a couple of build artefacts. In "bootfiles.tar.gz" are all the files which have to be placed in the "/boot" folder on the FAT32 partition. These are namely the 64bit Linux kernel "kernel8.img", the device tree binary Linux kernel configuration file "bcm2710-rpi-3-b.dtb" and the kernel overlay files in a folder called "overlays/".
+```
+$ tar vtf builds/20170303-152804/bootfiles.tar.gz
+-rw-r--r--  0 root   root 12704256 Mar  3 16:40 ./kernel8.img
+drwxr-xr-x  0 root   root        0 Mar  3 16:40 ./overlays/
+...
+-rw-r--r--  0 root   root    17714 Mar  3 16:40 ./bcm2710-rpi-3-b.dtb
+```
+
+But more important is the file "4.9.13-bee42-v8.tar.gz". Here you'll find all kernel files we really need to install on "/boot" and in the root filesystem like "/lib/firmware" and the kernel modules "/lib/modules/4.9.13-bee42-v8/".
+```
+$ tar vtf builds/20170303-152804/4.9.13-bee42-v8.tar.gz
+drwxr-xr-x  0 root   root        0 Mar  3 16:40 ./lib/modules/4.9.13-bee42-v8/
+...
+drwxr-xr-x  0 root   root        0 Mar  3 16:40 ./lib/firmware/
+...
+drwxr-xr-x  0 root   root        0 Mar  3 16:40 ./boot/
+-rw-r--r--  0 root   root 12704256 Mar  3 16:40 ./boot/kernel8.img
+drwxr-xr-x  0 root   root        0 Mar  3 16:40 ./boot/overlays/
+...
+-rw-r--r--  0 root   root    17714 Mar  3 16:40 ./boot/bcm2710-rpi-3-b.dtb
+```
+
+And if you're interested in the generated and used kernel configuration file, this can be found in "4.9.13-bee42-v8.config" as a build artefact.
+
+
+### Create a Travis CI build job
+
+Most of the times it is easier and more reliable to use a CI (continous integration) system to run the build process on a cloud server, so I'm going to use [Travis CI](https://travis-ci.org).
+
+I just created the necessary Travis configuration file `.travis.yml` with some special settings.
+```
+$ cat .travis.yml
+sudo: required
+services:
+  - docker
+language: bash
+script:
+  - ./travis-build.sh
+after_success:
+  - ls -al builds/$BUILD_NR/*
+branches:
+  only:
+    - master
+  except:
+    - /^v\d.*$/
+```
+
+With the help of an extra Travis build script `travis-build.sh` I'm now able to upload the build artefacts of every successful build as a new GitHub release at https://github.com/DieterReuter/rpi64-kernel/releases. This makes it very easy to consume these build artefacts later in another build process and I do have all the complete and detailed build logs available for future reference.
+
+
+## Recap
+
+First we discussed how the Linux kernel will be used in the boot process and which necessary files we need to install on the "/boot" section of the FAT32 partiton of the SD card. Then we were able to boot a 64bit Linux kernel successfully on a Raspberry Pi 3 and seen the kernel boot logs appear on the serial UART console.
+
+With the help of a newly created GitHub repo we're no able to compile and package all Linux files in tarballs, so we could copy them over onto a SD card.
+
+From the boot attempt we know that the Linux kernel ends up in a "kernel panic", because we didn't provide a valid root filesystem on our SD card. So for the next part we'll covering how to create and use such a root filesystem
+in [Part 3 - Root filesystem](part3-root-filesystem.md).
 
 --
 
