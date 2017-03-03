@@ -23,7 +23,7 @@ Here is a short overview of the contents of the workshop:
 
 * [Part 1: Bootloader](/part1-bootloader.md)
 
-* **Part 2: Kernel**
+* [Part 2: Kernel](/part2-kernel.md)
 
 * **Part 3: Root filesystem**
 
