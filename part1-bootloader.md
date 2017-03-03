@@ -65,7 +65,7 @@ As I already mentioned before, these bootloader files are provided as closed-sou
 Now it's time to build our first component, the "rpi-bootloader" which contains just the bootfiles for the Raspberry Pi. And for easy use we're just going to create a tarball with the essential bootfiles.
 > As these bootfiles are not specific to a Raspberry Pi 3 only, we could possibly reuse this package later for all the other Raspberry Pi models as well.
 
-I've already prepared a GitHub repo to create a tarball https://github.com/hypriot/rpi-bootloader.
+I've already prepared a GitHub repo to create a tarball https://github.com/dieterreuter/rpi-bootloader.
 
 ### How the build process works
 
