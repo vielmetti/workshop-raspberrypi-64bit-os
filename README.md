@@ -21,7 +21,7 @@ At the end you should have learned how to build all the necessary parts and how 
 
 Here is a short overview of the contents of the workshop:
 
-* **Part 1: Bootloader**
+* [Part 1: Bootloader](/part1-bootloader.md)
 
 * **Part 2: Kernel**
 
