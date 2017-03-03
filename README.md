@@ -25,7 +25,7 @@ Here is a short overview of the contents of the workshop:
 
 * [Part 2: Kernel](/part2-kernel.md)
 
-* **Part 3: Root filesystem**
+* [Part 3: Root Filesystem](/part3-root-filesystem.md)
 
 * **Part 4: SD Card Image**
 
