@@ -382,7 +382,7 @@ First we discussed how the Linux kernel will be used in the boot process and whi
 With the help of a newly created GitHub repo we're now able to compile and package all necessary Linux kernel files in tarballs, so we could copy them over onto a SD card.
 
 From the boot attempt we know that the Linux kernel ends up in a "kernel panic", because we didn't provide a valid root filesystem on our SD card. So for the next part we'll covering how to create and use such a root filesystem
-in [Part 3 - Root filesystem](part3-root-filesystem.md).
+in [Part 3 - Root filesystem](/part3-root-filesystem.md).
 
 --
 

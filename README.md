@@ -27,7 +27,7 @@ Here is a short overview of the contents of the workshop:
 
 * [Part 3: Root Filesystem](/part3-root-filesystem.md)
 
-* **Part 4: SD Card Image**
+* [Part 4: SD Card Image](/part4-sd-card-image.md)
 
 So, that's enough for explaining the background of this workshop. For more informations
 please follow along the details I'll publish on the coming tweets at Twitter and in the

@@ -64,7 +64,7 @@ Lets sum up what components we do have now:
 2. Kernel - a Linux kernel in 64bit with the current LTS version 4.9.13 compiled and configured for the Raspberry Pi 3
 3. Root Filesystem - from HypriotOS based on Debian/Jessie for AARCH64
 
-So, these are finally all the components we need to build our complete operating system. The final construction will be covered in [Part 4 - SD Card Image](part4-sd-card-image.md) where we'll create a bootable SD card and assemble all of the components we've built so far.
+So, these are finally all the components we need to build our complete operating system. The final construction will be covered in [Part 4 - SD Card Image](/part4-sd-card-image.md) where we'll create a bootable SD card and assemble all of the components we've built so far.
 
 --
 
